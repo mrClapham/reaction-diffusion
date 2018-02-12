@@ -1,0 +1,25 @@
+@import "../../../sass/partials/colors";
+
+.header-vanilla{
+  width: 100%;
+  height: auto;
+  background-color: $dark-grey;
+  color: #ffffff;
+  padding: 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  -webkit-app-region: drag;
+
+  .header-text{
+    font-size: 18px;
+  }
+
+  .header-sub-text{
+    font-size: 14px;
+  }
+}
+
+.header-textbox{
+  background-color: #454545;
+  color: #ffffff;
+}
