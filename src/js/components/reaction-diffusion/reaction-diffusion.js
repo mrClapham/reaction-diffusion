@@ -43,8 +43,6 @@ export default (targDiv, config)=> {
     grid = makeGrid(props.width, props.height)
     next = makeGrid(props.width, props.height)
 
-
-
     const BaseClass = (sketch)=>{
         sketch.setup = ()=>{
             sketch.createCanvas(props.width, props.height);
@@ -85,7 +83,6 @@ export default (targDiv, config)=> {
             }
 
             sketch.updatePixels()
-            sketch.ellipse(50, 50, 80, 80);
             swap()
         };
     };

@@ -1,13 +1,18 @@
-import 'core-js';
-import HeaderVanilla from './vanilla_conmponents/vanilla-header.js';
-import Factory from './vanilla_conmponents/component-factory'
-import RaectionDiffusion from './components/reaction-diffusion/reaction-diffusion'
+import { PixiApp } from './components/App/pixi-app'
+import CanvasRenderer from './components/canvas-renderer/canvas-renderer'
+import { makeGrid } from './components/canvas-renderer/canvas-renderer'
 require("../sass/entry.scss");
 document.addEventListener("DOMContentLoaded", function () {
     init();
 });
 
 function init() {
-    const rd = RaectionDiffusion(document.querySelector('#content'), {width:200});
+    //const pa = PixiApp(document.querySelector('#content'), {width:800});
+    const width = 320
+    const height = 320
+
+    const renderer = CanvasRenderer.create(document.querySelector('#canvas-content'), {width, height})// .init()
+    let grid = makeGrid(width, height)
+    renderer.render(grid)
 }
 
