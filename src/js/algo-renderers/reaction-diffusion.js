@@ -1,27 +1,61 @@
-
-
-const laplaceA = ()=> {
-    1
+const defaults = {
+    grid: [],
+    next: [],
+    width: 800,
+    height: 200,
+    dA: 1,
+    dB: 0.5,
+    feed: 0.55,
+    k: 0.061
 }
-const laplaceB = ()=> {
-    1
+
+const props = {...defaults};
+
+
+import { deepCopyArray } from '../utilities/deep-copy'
+
+const laplaceA = (value)=> {
+    return value
+}
+const laplaceB = (value)=> {
+    return value
 }
 
-export const makeRDGrid = (w, h) => {
-    const grid = [];
-    for (let x = 0; x < w; x++) {
-        grid[x] = [];
-        for (let y = 0; y < h; y++) {
-            grid[x][y] = { a:0, b:0 }
-        };
-    };
-    return grid // if I want a flat array use this [].concat(...grid);
+/**
+ * Takes a 3d Array - as created by the 'makeGrid()' method and adds the rdA and rdB properties.
+ * @param {*} grid 
+ */
+export const makeRDGrid = (grid) => {
+     return grid.map((d,i)=>{
+        return d.map((dd,ii)=>{
+            return {...dd, rdA:1, rdB:1}
+        });
+    });
 };
 
+const ABToRgb = (a,b)=>{
+    const r = Math.floor(255 * a);
+    const g = Math.floor(255 * b);
+    return {r:r, g:g, b:0}
+}
+
+export const rdAFunc = (a, b, grid) =>{
+const ret = a +  ( props.dA + laplaceA(1) * a ) -
+     ( a * b * b ) + 
+     ( props.feed * (1 - a) );
+     return ret
+}
+
 export const reactionDiffusion = (donerGrid) =>{
-    const newGrid = donerGrid.map((d,i)=>{
+    // To save the previous state as I need to refer to it below
+    const copyGrid = deepCopyArray(donerGrid)
+
+    return donerGrid.map((d,i)=>{
         return d.map((dd,ii)=>{
-            const {}
+            const {rdA, rdB, donerGrid } = copyGrid[i][ii];
+            const newA = rdAFunc(rdA, rdB);
+            const newB = rdAFunc(rdB, rdA);
+            return {...dd, rdA: newA , rdB: newB, ...ABToRgb(newA, newB, copyGrid)};
         });
     });
 
